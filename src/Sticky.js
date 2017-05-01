@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
+import React, {Component} from "react";
+import ReactDOM from "react-dom";
+import PropTypes from "prop-types";
 
 export default class Sticky extends Component {
 
@@ -86,23 +86,22 @@ export default class Sticky extends Component {
     });
   };
 
+  contentRef = content => {
+    this.content = ReactDOM.findDOMNode(content);
+  };
+
+  placeholderRef = placeholder => {
+    this.placeholder = placeholder
+  };
+
   render() {
-    const element = React.cloneElement(
-      this.props.children({
-        isSticky: this.state.isSticky,
-        wasSticky: this.state.wasSticky,
-        distanceFromTop: this.state.distanceFromTop,
-        distanceFromBottom: this.state.distanceFromBottom,
-        calculatedHeight: this.state.calculatedHeight,
-        style: this.state.style
-      }),
-      { ref: content => { this.content = ReactDOM.findDOMNode(content); } }
-    )
+
+    const Component = this.props.children;
 
     return (
       <div>
-        <div ref={ placeholder => this.placeholder = placeholder } />
-        { element }
+        <div ref={this.placeholderRef}/>
+        <Component {...this.state} ref={this.contentRef}/>
       </div>
     )
   }
